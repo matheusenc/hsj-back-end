@@ -1,0 +1,18 @@
+**/bin/
+**/obj/
+**/.vs/
+**/.idea/
+**/*.user
+**/*.suo
+
+# Segredos e estado local nunca entram na imagem
+.env
+**/appsettings.Local.json
+**/appsettings.Production.json
+storage/
+
+# Não fazem parte do build da API
+tests/
+.git/
+.gitignore
+*.md
