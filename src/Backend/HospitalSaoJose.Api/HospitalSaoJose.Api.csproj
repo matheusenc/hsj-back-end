@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.11" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\HospitalSaoJose.Communication\HospitalSaoJose.Communication.csproj" />
+    <ProjectReference Include="..\..\Shared\HospitalSaoJose.Exception\HospitalSaoJose.Exception.csproj" />
+    <ProjectReference Include="..\HospitalSaoJose.Application\HospitalSaoJose.Application.csproj" />
+    <ProjectReference Include="..\HospitalSaoJose.Infrastructure\HospitalSaoJose.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

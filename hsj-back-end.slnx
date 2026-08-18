@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Backend/">
+    <Project Path="src/Backend/HospitalSaoJose.Api/HospitalSaoJose.Api.csproj" />
+    <Project Path="src/Backend/HospitalSaoJose.Application/HospitalSaoJose.Application.csproj" />
+    <Project Path="src/Backend/HospitalSaoJose.Domain/HospitalSaoJose.Domain.csproj" />
+    <Project Path="src/Backend/HospitalSaoJose.Infrastructure/HospitalSaoJose.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Shared/">
+    <Project Path="src/Shared/HospitalSaoJose.Communication/HospitalSaoJose.Communication.csproj" />
+    <Project Path="src/Shared/HospitalSaoJose.Exception/HospitalSaoJose.Exception.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CommonTestUtilities/CommonTestUtilities.csproj" />
+    <Project Path="tests/UseCases.Tests/UseCases.Tests.csproj" />
+    <Project Path="tests/Validators.Tests/Validators.Tests.csproj" />
+    <Project Path="tests/WebApi.Tests/WebApi.Tests.csproj" />
+  </Folder>
+</Solution>
