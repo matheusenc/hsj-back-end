@@ -10,5 +10,8 @@ appsettings.Local.json
 appsettings.Production.json
 .env
 
-# Arquivos enviados pelo admin em ambiente de desenvolvimento
-storage/
+# Arquivos enviados pelo admin em ambiente de desenvolvimento.
+# A barra inicial ancora a regra na raiz: sem ela o padrao casaria com
+# qualquer pasta Storage/ do codigo (o Windows ignora caixa) e o fonte
+# ficaria de fora do commit.
+/storage/
