@@ -5,7 +5,12 @@ obj/
 *.user
 *.suo
 
-# Segredos locais — nunca versionar
+# Segredos locais — nunca versionar.
+# O Development.json sai do controle de versão porque cada máquina aponta para
+# um banco diferente (local ou o da VPS) e a senha ficaria commitada. Use
+# appsettings.Development.json.example como ponto de partida, ou os user
+# secrets: dotnet user-secrets set "ConnectionStrings:DbConnection" "..."
+appsettings.Development.json
 appsettings.Local.json
 appsettings.Production.json
 .env
