@@ -66,6 +66,13 @@ builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        // Sem isto o .NET renomeia as claims registradas do JWT para os tipos
+        // WS-Federation — `sub` vira
+        // http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier.
+        // O OnTokenValidated abaixo procura por `sub`, não acharia nada e
+        // recusaria toda requisição autenticada com 401.
+        options.MapInboundClaims = false;
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = false,
