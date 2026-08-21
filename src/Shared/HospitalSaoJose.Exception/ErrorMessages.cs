@@ -53,7 +53,8 @@ public static class ErrorMessages
     public const string VALIDATION_PUBLICATION_DATE_REQUIRED = "A data de publicação é obrigatória.";
     public const string VALIDATION_CATEGORY_REQUIRED = "A categoria é obrigatória.";
     public const string VALIDATION_FILE_REQUIRED = "O arquivo é obrigatório.";
-    public const string VALIDATION_ONLY_PDF_ACCEPTED = "Somente arquivos PDF são aceitos.";
+    public const string VALIDATION_FILE_TYPE_NOT_ACCEPTED = "Tipo de arquivo não aceito. Envie PDF, Word, Excel, PowerPoint, imagem ou ZIP.";
+    public const string VALIDATION_FILE_CONTENT_MISMATCH = "O conteúdo do arquivo não corresponde à extensão do nome.";
     public const string VALIDATION_FILE_MAX_SIZE = "O arquivo deve ter no máximo 25 MB.";
     public const string DOCUMENT_NOT_FOUND = "Documento não encontrado.";
     public const string DOCUMENT_FILE_NOT_FOUND = "O arquivo deste documento não está disponível.";

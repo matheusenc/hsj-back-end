@@ -66,7 +66,7 @@ public class RegisterDocumentTests : BaseIntegrationTest
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
 
         var error = await response.Content.ReadFromJsonAsync<ResponseErrorJson>(JsonOptions);
-        error!.Errors.ShouldContain(ErrorMessages.VALIDATION_ONLY_PDF_ACCEPTED);
+        error!.Errors.ShouldContain(ErrorMessages.VALIDATION_FILE_CONTENT_MISMATCH);
     }
 
     [Fact]

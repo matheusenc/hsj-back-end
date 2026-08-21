@@ -45,10 +45,15 @@ public class UpdateDocumentByIdUseCase : IUpdateDocumentByIdUseCase
         var replacedFileName = string.Empty;
         if (file is not null)
         {
+            var extensao = file.Extension();
+
             replacedFileName = document.StoredFileName;
             document.OriginalFileName = file.FileName;
+            // Trocar um PDF por uma planilha mudava o arquivo e deixava o tipo
+            // antigo gravado, o que fazia o download sair rotulado errado.
+            document.ContentType = DocumentFileTypes.Find(extensao)!.ContentType;
             document.SizeInBytes = file.SizeInBytes;
-            document.StoredFileName = await _fileStorageService.Upload(file.Content, DocumentFileValidator.PDF_EXTENSION);
+            document.StoredFileName = await _fileStorageService.Upload(file.Content, extensao);
         }
 
         try

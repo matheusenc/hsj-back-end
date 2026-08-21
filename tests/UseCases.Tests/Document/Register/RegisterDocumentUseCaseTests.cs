@@ -54,7 +54,7 @@ public class RegisterDocumentUseCaseTests
     }
 
     [Fact]
-    public async Task Execute_ShouldThrowException_WhenFileIsNotAPdf()
+    public async Task Execute_ShouldThrowException_WhenContentDoesNotMatchExtension()
     {
         var category = CategoryBuilder.Build();
         var request = RequestDocumentJsonBuilder.Build(category.Id);
@@ -65,7 +65,37 @@ public class RegisterDocumentUseCaseTests
 
         var exception = await useCase.Execute(request, file).ShouldThrowAsync<ErrorOnValidationException>();
 
-        exception.GetErrorMessages().ShouldContain(ErrorMessages.VALIDATION_ONLY_PDF_ACCEPTED);
+        exception.GetErrorMessages().ShouldContain(ErrorMessages.VALIDATION_FILE_CONTENT_MISMATCH);
+    }
+
+    [Fact]
+    public async Task Execute_ShouldThrowException_WhenExtensionIsNotAccepted()
+    {
+        var category = CategoryBuilder.Build();
+        var request = RequestDocumentJsonBuilder.Build(category.Id);
+        var content = FileBuilder.Pdf();
+        var file = new DocumentFile(content, "instalador.exe", content.Length);
+
+        var useCase = CreateUseCase(category);
+
+        var exception = await useCase.Execute(request, file).ShouldThrowAsync<ErrorOnValidationException>();
+
+        exception.GetErrorMessages().ShouldContain(ErrorMessages.VALIDATION_FILE_TYPE_NOT_ACCEPTED);
+    }
+
+    [Fact]
+    public async Task Execute_ShouldAcceptSpreadsheet_AndKeepItsOwnExtension()
+    {
+        var category = CategoryBuilder.Build();
+        var request = RequestDocumentJsonBuilder.Build(category.Id);
+        var content = FileBuilder.Xlsx();
+        var file = new DocumentFile(content, "Execucao orcamentaria.XLSX", content.Length);
+
+        var useCase = CreateUseCase(category);
+
+        var response = await useCase.Execute(request, file);
+
+        response.ShouldNotBeNull();
     }
 
     [Fact]

@@ -41,10 +41,15 @@ public class RegisterDocumentUseCase : IRegisterDocumentUseCase
 
         var document = request.Adapt<Domain.Entities.Document>();
         document.CreatedByUserId = _loggedUser.GetUserId();
-        document.OriginalFileName = file!.FileName;
-        document.ContentType = DocumentFileValidator.PDF_CONTENT_TYPE;
+        // O tipo sai da extensão pela lista de aceitos, e não do cabeçalho que o
+        // navegador manda — aquele é escolhido pelo cliente. A validação já
+        // garantiu que a extensão está na lista.
+        var extensao = file!.Extension();
+
+        document.OriginalFileName = file.FileName;
+        document.ContentType = DocumentFileTypes.Find(extensao)!.ContentType;
         document.SizeInBytes = file.SizeInBytes;
-        document.StoredFileName = await _fileStorageService.Upload(file.Content, DocumentFileValidator.PDF_EXTENSION);
+        document.StoredFileName = await _fileStorageService.Upload(file.Content, extensao);
 
         try
         {
