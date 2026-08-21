@@ -37,6 +37,10 @@ public class RegisterDocumentUseCase : IRegisterDocumentUseCase
 
     public async Task<ResponseRegisteredDocumentJson> Execute(RequestDocumentJson request, DocumentFile? file)
     {
+        // Higieniza antes de validar, para que as regras enxerguem exatamente
+        // o que será gravado.
+        request.Description = DocumentDescriptionSanitizer.Sanitize(request.Description);
+
         await ValidateAndThrowOnFailures(request, file);
 
         var document = request.Adapt<Domain.Entities.Document>();

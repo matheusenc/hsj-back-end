@@ -8,4 +8,5 @@ internal abstract class DatabaseVersions
     internal const int TABLE_USERS = 4;
     internal const int TABLE_CATEGORIES = 5;
     internal const int TABLE_DOCUMENTS = 6;
+    internal const int DOCUMENTS_DESCRIPTION_AS_HTML = 7;
 }

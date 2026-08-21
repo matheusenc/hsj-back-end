@@ -82,7 +82,7 @@ internal class HospitalSaoJoseDbContext : DbContext
             entity.ToTable("Documents");
             entity.Property(document => document.Id).ValueGeneratedNever();
             entity.Property(document => document.Title).HasMaxLength(255).IsRequired();
-            entity.Property(document => document.Description).HasMaxLength(2000).IsRequired();
+            entity.Property(document => document.Description).HasMaxLength(8000).IsRequired();
             entity.Property(document => document.ExternalLink).HasMaxLength(2000);
             entity.Property(document => document.OriginalFileName).HasMaxLength(255).IsRequired();
             entity.Property(document => document.StoredFileName).HasMaxLength(100).IsRequired();

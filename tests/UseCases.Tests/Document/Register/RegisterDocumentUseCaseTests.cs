@@ -99,6 +99,50 @@ public class RegisterDocumentUseCaseTests
     }
 
     [Fact]
+    public async Task Execute_ShouldStripDangerousMarkupFromDescription()
+    {
+        var category = CategoryBuilder.Build();
+        var request = RequestDocumentJsonBuilder.Build(category.Id);
+        request.Description =
+            """
+            <p>Veja o <a href="https://exemplo.org/edital">edital</a>.</p>
+            <script>alert('xss')</script>
+            <img src=x onerror="alert(1)">
+            <a href="javascript:alert(1)">clique aqui</a>
+            <iframe src="https://exemplo.org"></iframe>
+            """;
+
+        var useCase = CreateUseCase(category);
+
+        await useCase.Execute(request, PdfFile());
+
+        // O use case higieniza o request antes de gravar, então o que sobrou
+        // aqui é exatamente o que foi para o banco.
+        request.Description.ShouldNotContain("<script");
+        request.Description.ShouldNotContain("onerror");
+        request.Description.ShouldNotContain("javascript:");
+        request.Description.ShouldNotContain("<iframe");
+        request.Description.ShouldNotContain("<img");
+
+        request.Description.ShouldContain("https://exemplo.org/edital");
+        request.Description.ShouldContain("rel=\"noopener noreferrer\"");
+    }
+
+    [Fact]
+    public async Task Execute_ShouldThrowException_WhenDescriptionHasOnlyMarkup()
+    {
+        var category = CategoryBuilder.Build();
+        var request = RequestDocumentJsonBuilder.Build(category.Id);
+        request.Description = "<p></p><br>";
+
+        var useCase = CreateUseCase(category);
+
+        var exception = await useCase.Execute(request, PdfFile()).ShouldThrowAsync<ErrorOnValidationException>();
+
+        exception.GetErrorMessages().ShouldContain(ErrorMessages.VALIDATION_DESCRIPTION_REQUIRED);
+    }
+
+    [Fact]
     public async Task Execute_ShouldThrowException_WhenFileIsTooLarge()
     {
         var category = CategoryBuilder.Build();

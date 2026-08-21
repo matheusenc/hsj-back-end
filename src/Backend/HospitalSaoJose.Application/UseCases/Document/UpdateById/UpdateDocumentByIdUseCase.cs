@@ -32,6 +32,10 @@ public class UpdateDocumentByIdUseCase : IUpdateDocumentByIdUseCase
     {
         var document = await _documentUpdateOnlyRepository.GetById(id) ?? throw new NotFoundException(ErrorMessages.DOCUMENT_NOT_FOUND);
 
+        // Higieniza antes de validar, para que as regras enxerguem exatamente
+        // o que será gravado.
+        request.Description = DocumentDescriptionSanitizer.Sanitize(request.Description);
+
         await ValidateAndThrowOnFailures(request, file);
 
         document.Title = request.Title;
